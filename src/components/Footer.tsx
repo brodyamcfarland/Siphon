@@ -9,7 +9,7 @@ import {
 const Footer = () => {
      return (
           <nav className="flex justify-center items-center pb-2">
-               <ul className="flex scale-75 md:scale-100 space-x-2 md:space-x-4 text-emerald-500/80">
+               <ul className="flex scale-75 md:scale-100 space-x-2 md:space-x-4 text-gray-300">
                     <li>
                          <Link href="https://github.com/brodyamcfarland/Siphon">
                               <AiFillGithub
