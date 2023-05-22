@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import "./globals.css";
-import Footer from "@/components/Footer";
 
 export const metadata = {
      title: "Siphon",
@@ -17,7 +16,6 @@ export default function RootLayout({
                <body className="h-screen w-full flex flex-col bg-black font-semibold">
                     <Header />
                     <div className="flex-1">{children}</div>
-                    <Footer />
                </body>
           </html>
      );
