@@ -1,3 +1,5 @@
+"use client";
+
 import {
      TbCircleNumber1,
      TbCircleNumber2,
@@ -29,9 +31,12 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
                     setLoading(true);
                     setError("");
 
-                    const response = await fetch(url);
-                    const data = await response.text();
-                    const $ = cheerio.load(data);
+                    const response = await fetch(
+                         `/api/scrape/${encodeURIComponent(url)}`
+                    );
+                    const html = response.text();
+                    console.log(await html);
+                    const $ = cheerio.load(await html);
 
                     // Use cheerio selectors to extract desired data from the response
                     let scrapedData;
