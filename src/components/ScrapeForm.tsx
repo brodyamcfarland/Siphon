@@ -14,7 +14,6 @@ import { htmlTagOptions } from "@/HTML_Options";
 import { Dispatch, SetStateAction, useState } from "react";
 import cheerio from "cheerio";
 import toast from "react-hot-toast";
-
 interface Props {
      setShowScrape: Dispatch<SetStateAction<boolean>>;
 }
@@ -28,6 +27,7 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
      const [htmlResults, setHtmlResults] = useState<string>("");
      const [error, setError] = useState<string>("");
      const [loading, setLoading] = useState<boolean>(false);
+     const [copied, setCopied] = useState<boolean>(false);
 
      const scrape = async () => {
           if (url === "" || !url.includes("https://")) {
@@ -42,6 +42,7 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
           }
           try {
                setLoading(true);
+               setCopied(false);
                setError("");
 
                const response = await fetch(
@@ -77,8 +78,19 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
           }
      };
 
+     const copyToClipboard = async () => {
+          try {
+               await navigator.clipboard.writeText(htmlResults);
+               setCopied(true);
+               toast.success("Copied to clipboard!");
+          } catch (error) {
+               toast.error("Failed to copy to clipboard.");
+               console.error(error);
+          }
+     };
+
      return (
-          <main className="flex flex-col items-center mt-10 md:mt-20 max-w-xl md:mx-auto text-xs md:text-sm mx-2">
+          <main className="flex flex-col items-center mt-6 md:mt-20 max-w-xl md:mx-auto text-xs md:text-sm mx-2">
                <button
                     onClick={() => setShowScrape(false)}
                     className="p-1 px-2 rounded-md text-white  opacity-80 hover:opacity-100 duration-300 text-xs border-2 border-emerald-500 mb-4"
@@ -192,7 +204,7 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
                     </form>
                </div>
                {showHtmlResults && (
-                    <div className="max-w-lg w-full bg-[#0d140c] text-white flex flex-col p-4 border-r border-l border-b border-white/20 rounded-b-md mx-2 md:mx-0">
+                    <div className="max-w-xs md:max-w-lg w-full bg-[#0d140c] text-white flex flex-col p-4 border-r border-l border-b border-white/20 rounded-b-md">
                          <span className="text-center">
                               Showing HTML Results for:
                          </span>
@@ -222,7 +234,7 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
                                         </span>
                                    </div>
                               ) : (
-                                   <p className="overflow-y-auto max-h-[13rem] whitespace-pre-wrap">
+                                   <p className="overflow-y-auto scrollbar-thin scrollbar-track-green-900/50 scrollbar-thumb-emerald-600/80 max-h-[13rem] whitespace-pre-wrap">
                                         {htmlResults.length === 0 ? (
                                              <span className="text-center flex items-center justify-center uppercase text-[10px] tracking-widest ">
                                                   No Results found
@@ -233,8 +245,11 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
                                    </p>
                               )}
 
-                              <button className="truncate overflow-x-clip absolute bottom-0 right-0 rounded-br-md p-1 border-white/20 flex gap-2 items-center justify-end border hover:border-white hover:bg-white/20 duration-300">
-                                   <span>Copy</span>
+                              <button
+                                   onClick={copyToClipboard}
+                                   className="absolute bottom-0 right-0 rounded-br-md p-1 border-white/20 flex gap-2 items-center justify-end border hover:border-white hover:bg-white/20 duration-300"
+                              >
+                                   <span>{copied ? "Copied" : "Copy"}</span>
                                    <FiCopy />
                               </button>
                          </div>

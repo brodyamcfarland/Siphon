@@ -9,11 +9,17 @@ module.exports = {
           extend: {
                animation: {
                     "custom-pulse": "custom-pulse 5s infinite",
+                    "grow-shrink": "grow-shrink 8s infinite",
                },
                keyframes: {
                     "custom-pulse": {
                          "0%, 100%": { opacity: 1 },
                          "50%": { opacity: 0.5 },
+                    },
+                    "grow-shrink": {
+                         "0%": { transform: "scaleY(.5)" },
+                         "50%": { transform: "scaleY(.05)" },
+                         "100%": { transform: "scaleY(.5)" },
                     },
                },
                backgroundImage: {
@@ -24,5 +30,5 @@ module.exports = {
                },
           },
      },
-     plugins: [],
+     plugins: [require("tailwind-scrollbar")],
 };

@@ -14,7 +14,7 @@ interface Props {
 
 const About = ({ setShowScrape }: Props) => {
      return (
-          <main className="flex flex-col items-center mt-10 md:mt-20 max-w-xl md:mx-auto text-xs md:text-sm mx-2 gap-4">
+          <main className="flex flex-col items-center mt-6 md:mt-20 max-w-xl md:mx-auto text-xs md:text-sm mx-2 gap-4">
                <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-700/90 to-orange-900/50 rounded-lg blur-lg z-0 animate-custom-pulse"></div>
 
@@ -30,8 +30,8 @@ const About = ({ setShowScrape }: Props) => {
                </div>
                <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-l from-emerald-600/90 to-orange-900/50 rounded-lg blur-lg z-0 animate-custom-pulse"></div>
-                    <div className="relative rounded-lg bg-black flex flex-col items-center border border-white/20">
-                         <h1 className="text-md pt-2 uppercase tracking-widest text-emerald-600">
+                    <div className="relative rounded-lg bg-black flex flex-col items-center border border-white/20 py-10 px-5">
+                         <h1 className="text-md uppercase tracking-widest text-emerald-600">
                               How to Scrape
                          </h1>
                          <article className="flex flex-col gap-3 p-4 text-gray-300">
