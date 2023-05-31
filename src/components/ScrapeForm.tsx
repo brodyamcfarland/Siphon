@@ -63,8 +63,21 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
                     scrapedData = $(htmlTag).text();
                }
                console.log(scrapedData);
-               const tagsArray = scrapedData.split(/(?=[A-Z])/);
-               const formattedData = tagsArray.join("\n");
+               // Split scrapedData into an array of tags
+               const tagsArray = splitByMultipleSpaces(scrapedData);
+               console.log(tagsArray);
+
+               // Create an object with specific property names
+               const result: { [key: string]: string | null } = {};
+               for (let i = 0; i < tagsArray.length; i++) {
+                    const propertyName = `${htmlTag}_${i + 1}`;
+                    let value = tagsArray[i].replace(/\s+/g, " ").trim();
+                    value = value.replace(/\n/g, ""); // Remove line breaks
+                    result[propertyName] = value.length > 0 ? value : null;
+               }
+
+               const formattedData = JSON.stringify(result, null, 2);
+
                setHtmlResults(formattedData);
           } catch (error) {
                setError("SCRAPEFAIL");
@@ -76,6 +89,11 @@ const ScrapeForm = ({ setShowScrape }: Props) => {
                setError("");
                toast.success("Scrape Successful!");
           }
+     };
+
+     const splitByMultipleSpaces = (str: string) => {
+          const regex = /\s{2,}/; // Match two or more spaces
+          return str.split(regex);
      };
 
      const copyToClipboard = async () => {
