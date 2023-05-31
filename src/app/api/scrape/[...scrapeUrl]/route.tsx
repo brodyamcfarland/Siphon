@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }) {
+export async function GET(
+     request: Request,
+     { params }: { params: { scrapeUrl: string } }
+) {
      console.log(`>> Siphoning HTML from: ${params.scrapeUrl}.........`);
      try {
           const response = await fetch(`${params.scrapeUrl}`);
